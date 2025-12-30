@@ -35,38 +35,7 @@ Backend API for Cảnh Quan Kiến Trúc Xanh (Green Landscape Architecture) - A
 - PostgreSQL database
 - npm or yarn
 
-### Setup
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
 
-3. Create `.env` file:
-   ```env
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=koi_garden_database
-   DB_USER=your_username
-   DB_PASSWORD=your_password
-   PORT=3000
-   NODE_ENV=development
-   ```
-
-4. Initialize database:
-   ```bash
-   npm run deploy:init
-   ```
-
-5. Start development server:
-   ```bash
-   npm run dev
-   ```
-
-6. Visit API documentation:
-   ```
-   http://localhost:3000/api-docs
-   ```
 
 ## 🌐 Deployment on Render
 
@@ -96,15 +65,7 @@ Backend API for Cảnh Quan Kiến Trúc Xanh (Green Landscape Architecture) - A
    - Set build command: `npm install`
    - Set start command: `npm start`
    - Set environment variables:
-     ```
-     NODE_ENV=production
-     PORT=10000
-     DB_HOST=your-render-postgres-host
-     DB_PORT=5432
-     DB_NAME=your-database-name
-     DB_USER=your-database-user
-     DB_PASSWORD=your-database-password
-     ```
+  
 
 3. **Deploy**: Render will automatically build and deploy your application
 
@@ -131,18 +92,7 @@ The application uses PostgreSQL with the following tables:
 
 ## 🔧 Configuration
 
-### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NODE_ENV` | Environment mode | `development` |
-| `PORT` | Server port | `3000` (dev), `10000` (prod) |
-| `DB_HOST` | Database host | `localhost` |
-| `DB_PORT` | Database port | `5432` |
-| `DB_NAME` | Database name | - |
-| `DB_USER` | Database user | - |
-| `DB_PASSWORD` | Database password | - |
-| `ENABLE_SWAGGER` | Enable Swagger in production | `false` |
 
 ### CORS Configuration
 
