@@ -48,10 +48,8 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Swagger UI (only in development or if explicitly enabled)
-if (!isProduction || process.env.ENABLE_SWAGGER === 'true') {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-}
+// Swagger UI - Always enabled for API documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // API Routes
 app.use('/api/services', serviceRoutes);
@@ -140,9 +138,7 @@ app.listen(port, '0.0.0.0', async () => {
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🗄️  Database: ${process.env.DB_HOST ? 'Connected' : 'Local'}`);
   
-  if (!isProduction || process.env.ENABLE_SWAGGER === 'true') {
-    console.log(`📚 Swagger UI available at http://localhost:${port}/api-docs`);
-  }
+  console.log(`📚 Swagger UI available at http://localhost:${port}/api-docs`);
   
   console.log(`❤️  Health check available at http://localhost:${port}/health`);
   
