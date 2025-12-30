@@ -1,0 +1,105 @@
+# Contacts API Testing
+# Use with REST Client extension in VS Code
+
+### 1. Get all contacts (with pagination)
+GET http://localhost:3000/api/contacts?page=1&limit=10
+
+### 2. Get contacts filtered by status
+GET http://localhost:3000/api/contacts?status=new&page=1&limit=10
+
+### 3. Get contact statistics
+GET http://localhost:3000/api/contacts/stats
+
+### 4. Create new contact (minimal required fields)
+POST http://localhost:3000/api/contacts
+Content-Type: application/json
+
+{
+  "full_name": "John Doe",
+  "phone": "+1234567890"
+}
+
+### 5. Create contact with all fields
+POST http://localhost:3000/api/contacts
+Content-Type: application/json
+
+{
+  "full_name": "Jane Smith",
+  "phone": "0987654321",
+  "email": "jane.smith@example.com",
+  "subject": "Green Architecture Consultation",
+  "message": "I'm interested in sustainable building design for my new home. Could you provide more information about your services and pricing?",
+  "status": "new"
+}
+
+### 6. Get contact by ID (replace 1 with actual ID)
+GET http://localhost:3000/api/contacts/1
+
+### 7. Update contact (replace 1 with actual ID)
+PUT http://localhost:3000/api/contacts/1
+Content-Type: application/json
+
+{
+  "full_name": "John Doe Updated",
+  "phone": "+1234567890",
+  "email": "john.updated@example.com",
+  "subject": "Updated Subject",
+  "message": "Updated message content",
+  "status": "in_progress"
+}
+
+### 8. Update contact status only (replace 1 with actual ID)
+PATCH http://localhost:3000/api/contacts/1/status
+Content-Type: application/json
+
+{
+  "status": "resolved"
+}
+
+### 9. Delete contact (replace 1 with actual ID)
+DELETE http://localhost:3000/api/contacts/1
+
+### 10. Test validation - Create contact without required fields (should fail)
+POST http://localhost:3000/api/contacts
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+### 11. Test validation - Invalid email format (should fail)
+POST http://localhost:3000/api/contacts
+Content-Type: application/json
+
+{
+  "full_name": "Test User",
+  "phone": "1234567890",
+  "email": "invalid-email"
+}
+
+### 12. Test validation - Invalid phone format (should fail)
+POST http://localhost:3000/api/contacts
+Content-Type: application/json
+
+{
+  "full_name": "Test User",
+  "phone": "123"
+}
+
+### 13. Test validation - Invalid status (should fail)
+POST http://localhost:3000/api/contacts
+Content-Type: application/json
+
+{
+  "full_name": "Test User",
+  "phone": "1234567890",
+  "status": "invalid_status"
+}
+
+### 14. Test status update with invalid status (should fail)
+PATCH http://localhost:3000/api/contacts/1/status
+Content-Type: application/json
+
+{
+  "status": "invalid_status"
+}

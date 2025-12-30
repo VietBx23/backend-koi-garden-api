@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: koi-garden-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        fromDatabase:
+          name: koi-garden-database
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: koi-garden-database
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: koi-garden-database
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: koi-garden-database
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: koi-garden-database
+          property: password
+      - key: PORT
+        value: 10000
+
+databases:
+  - name: koi-garden-database
+    databaseName: koi_garden_database
+    user: koi_garden_database_user
+    plan: free

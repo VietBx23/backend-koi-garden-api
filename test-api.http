@@ -1,0 +1,63 @@
+# Services API Testing
+# Use with REST Client extension in VS Code
+
+### 1. Get all services (with pagination)
+GET http://localhost:3000/api/services?page=1&limit=10
+
+### 2. Create new service (auto-generated slug)
+POST http://localhost:3000/api/services
+Content-Type: application/json
+
+{
+  "name": "Green Architecture Design",
+  "image_url": "https://example.com/green-architecture.jpg",
+  "description": "Eco-friendly architecture design service using recycled materials and energy-efficient solutions."
+}
+
+### 3. Create service with custom slug
+POST http://localhost:3000/api/services
+Content-Type: application/json
+
+{
+  "name": "Solar Energy Consulting",
+  "slug": "solar-energy-consulting",
+  "image_url": "https://example.com/solar-energy.jpg",
+  "description": "Consulting and design services for residential and commercial solar energy systems."
+}
+
+### 4. Get service by ID (replace 1 with actual ID)
+GET http://localhost:3000/api/services/1
+
+### 5. Get service by slug
+GET http://localhost:3000/api/services/slug/green-architecture-design
+
+### 6. Update service (replace 1 with actual ID)
+PUT http://localhost:3000/api/services/1
+Content-Type: application/json
+
+{
+  "name": "Green Architecture Design - Updated",
+  "slug": "green-architecture-design-updated",
+  "image_url": "https://example.com/green-architecture-updated.jpg",
+  "description": "Updated eco-friendly architecture design service with new features and enhanced sustainability solutions."
+}
+
+### 7. Delete service (replace 1 with actual ID)
+DELETE http://localhost:3000/api/services/1
+
+### 8. Test validation - Create service without name (should fail)
+POST http://localhost:3000/api/services
+Content-Type: application/json
+
+{
+  "description": "Service without name"
+}
+
+### 9. Test validation - Create service with duplicate slug (should fail if exists)
+POST http://localhost:3000/api/services
+Content-Type: application/json
+
+{
+  "name": "Test Service",
+  "slug": "green-architecture-design"
+}
