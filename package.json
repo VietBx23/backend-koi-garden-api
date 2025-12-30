@@ -8,8 +8,7 @@
     "dev": "nodemon src/app.js",
     "build": "echo 'No build step required for Node.js'",
     "deploy:init": "node scripts/deploy-init.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npm run deploy:init"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["nodejs", "express", "postgresql", "api", "landscape", "koi-garden"],
   "author": "Koi Garden Team",

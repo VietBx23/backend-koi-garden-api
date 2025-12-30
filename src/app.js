@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import db from './config/db.js';
 import swaggerSpec from './config/swagger.js';
+import initializeDatabase from '../scripts/deploy-init.js';
 
 // Import all routes
 import serviceRoutes from './routes/serviceRoutes.js';
@@ -134,7 +135,7 @@ app.get('/test-db', async (req, res) => {
   }
 });
 
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, '0.0.0.0', async () => {
   console.log(`🚀 Server is running on port ${port}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🗄️  Database: ${process.env.DB_HOST ? 'Connected' : 'Local'}`);
@@ -144,4 +145,14 @@ app.listen(port, '0.0.0.0', () => {
   }
   
   console.log(`❤️  Health check available at http://localhost:${port}/health`);
+  
+  // Initialize database in production
+  if (isProduction && process.env.DB_HOST) {
+    console.log('🔄 Initializing database...');
+    try {
+      await initializeDatabase();
+    } catch (error) {
+      console.error('❌ Database initialization failed:', error.message);
+    }
+  }
 });

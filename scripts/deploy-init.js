@@ -5,22 +5,32 @@ dotenv.config();
 
 const { Pool } = pkg;
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT) || 5432,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  ssl: {
-    rejectUnauthorized: false
-  },
-});
-
 const initializeDatabase = async () => {
+  // Skip if not in production or if database env vars are not set
+  if (process.env.NODE_ENV !== 'production' || !process.env.DB_HOST) {
+    console.log('⏭️  Skipping database initialization (not production or no DB config)');
+    return;
+  }
+
+  const pool = new Pool({
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT) || 5432,
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    ssl: {
+      rejectUnauthorized: false
+    },
+  });
+
   try {
     console.log('🚀 Initializing database for production deployment...');
     console.log('📍 Host:', process.env.DB_HOST);
     console.log('📊 Database:', process.env.DB_NAME);
+    
+    // Test connection first
+    await pool.query('SELECT NOW()');
+    console.log('✅ Database connection successful');
     
     // Check if tables already exist
     const tablesResult = await pool.query(`
@@ -219,12 +229,19 @@ const initializeDatabase = async () => {
 
   } catch (error) {
     console.error('❌ Error initializing database:', error.message);
-    console.error('🔍 Error details:', error);
-    process.exit(1);
+    // Don't exit in production, just log the error
+    if (process.env.NODE_ENV !== 'production') {
+      process.exit(1);
+    }
   } finally {
     await pool.end();
   }
 };
 
-// Run initialization
-initializeDatabase();
+// Export for use in app.js
+export default initializeDatabase;
+
+// Run initialization if called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  initializeDatabase();
+}
